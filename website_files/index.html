@@ -393,83 +393,158 @@ We blijven continu innoveren met nieuwe technieken en automatiseringsoplossingen
   <div id="cookie-banner">
     <p>Wij gebruiken analytische cookies om onze website te verbeteren. Door op “Accepteer” te klikken ga je hiermee akkoord.</p>
     <button id="cookie-accept">Accepteer</button>
+<button id="cookie-decline">Weiger</button>
+
   </div>
 
   <!-- JS bibliotheken -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
 
-  <!-- Eigen scripts -->
-  <script>
-    /* Mobile menu */
-    const hamburger=document.getElementById('hamburger'),mobileMenu=document.getElementById('mobileMenu');
-    function toggleMenu(){mobileMenu.classList.toggle('open');hamburger.classList.toggle('open');}
-    hamburger.addEventListener('click',toggleMenu);
+ <!-- Eigen scripts -->
+<script>
+  // Mobile menu
+  const hamburger = document.getElementById('hamburger'),
+        mobileMenu = document.getElementById('mobileMenu');
+  function toggleMenu() {
+    mobileMenu.classList.toggle('open');
+    hamburger.classList.toggle('open');
+  }
+  hamburger.addEventListener('click', toggleMenu);
 
-    /* Footer jaar */
-    document.getElementById('year').textContent=new Date().getFullYear();
+  // Footer jaar
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-    /* Chat */
-    const chatToggle=document.getElementById('chat-toggle'),chatbox=document.getElementById('chatbox'),chatClose=document.getElementById('chat-close');
-    function openChat(){chatbox.classList.add('open');chatToggle.classList.add('seen');chatToggle.style.display='none';}
-    function closeChat(){chatbox.classList.remove('open');chatToggle.classList.remove('seen');chatToggle.style.display='block';}
-    chatToggle.addEventListener('click',openChat);chatClose.addEventListener('click',closeChat);
-    window.addEventListener('load',()=>setTimeout(openChat,5000));
+  // Chat
+  const chatToggle = document.getElementById('chat-toggle'),
+        chatbox = document.getElementById('chatbox'),
+        chatClose = document.getElementById('chat-close');
 
-    /* Cookie-consent + GA4 */
-    const banner=document.getElementById('cookie-banner'),accept=document.getElementById('cookie-accept');
-    function setCookie(n,v,d){const t=new Date();t.setTime(t.getTime()+d*864e5);document.cookie=`${n}=${v};expires=${t.toUTCString()};path=/`;}
-    function hasCookie(n){return document.cookie.split(';').some(c=>c.trim().startsWith(n+'='));}
-    function loadGA(){const GA_ID='G-ZGX0JKMFP7';const s=document.createElement('script');s.async=true;s.src=`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;document.head.appendChild(s);window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config',GA_ID,{anonymize_ip:true});}
-    if(!hasCookie('jukoConsent')){banner.style.display='flex';}else{loadGA();}
-    accept.addEventListener('click',()=>{setCookie('jukoConsent','true',365);banner.style.display='none';loadGA();});
+  function openChat() {
+    chatbox.classList.add('open');
+    chatToggle.classList.add('seen');
+    chatToggle.style.display = 'none';
+  }
 
-    /* Swiper initialisatie */
-    document.querySelectorAll('.projectSwiper').forEach(slider=>{
-      new Swiper(slider,{
-        navigation:{nextEl:slider.querySelector('.swiper-button-next'),prevEl:slider.querySelector('.swiper-button-prev')},
-        loop:true
-      });
-    });
+  function closeChat() {
+    chatbox.classList.remove('open');
+    chatToggle.classList.remove('seen');
+    chatToggle.style.display = 'block';
+  }
 
-    /* GLightbox initialisatie */
-    GLightbox({selector:'.glightbox'});
-  // Counter animatie
-// Teller alleen starten als ze zichtbaar zijn
-const counters = document.querySelectorAll('.counter');
-let counterStarted = false;
+  chatToggle.addEventListener('click', openChat);
+  chatClose.addEventListener('click', closeChat);
 
-const observer = new IntersectionObserver((entries, observer) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting && !counterStarted) {
-      counters.forEach(counter => {
-        const updateCount = () => {
-          const target = +counter.getAttribute('data-target');
-          const count = +counter.innerText.replace(/[^\d]/g, '');
-          const increment = Math.ceil(target / 50);
+  // Cookie consent + Google Analytics
+  const banner = document.getElementById('cookie-banner'),
+        accept = document.getElementById('cookie-accept'),
+        decline = document.getElementById('cookie-decline');
 
-          if (count < target) {
-            counter.innerText = count + increment;
-            setTimeout(updateCount, 30);
-          } else {
-            counter.innerText = target;
-          }
-        };
-        updateCount();
-      });
-      counterStarted = true;
-      observer.disconnect(); // Stop met observeren na 1 keer
+  // Greeting
+  const chatInfo = document.querySelector('.chat-info small');
+  const hours = new Date().getHours();
+  let greeting = 'Hallo';
+  if (hours >= 5 && hours < 12) greeting = 'Goedemorgen 👋';
+  else if (hours >= 12 && hours < 18) greeting = 'Goedemiddag 👋';
+  else greeting = 'Goedenavond 👋';
+  chatInfo.innerHTML = `${greeting}<br/>Heb je een vraag? Ik help je graag verder via:`;
+
+  function setCookie(name, value, days) {
+    const expires = new Date(Date.now() + days * 864e5).toUTCString();
+    document.cookie = `${name}=${value}; expires=${expires}; path=/`;
+  }
+
+  function hasCookie(name) {
+    return document.cookie.split(';').some(c => c.trim().startsWith(name + '='));
+  }
+
+  function loadGA() {
+    const GA_ID = 'G-ZGX0JKMFP7';
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+    document.head.appendChild(s);
+
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    window.gtag = gtag;
+
+    gtag('js', new Date());
+    gtag('config', GA_ID, { anonymize_ip: true });
+  }
+
+  function handleConsent(consent) {
+    setCookie('jukoConsent', consent, 365);
+    banner.style.display = 'none';
+    if (consent === 'true') loadGA();
+    setTimeout(openChat, 5000);
+  }
+
+  // Init gedrag
+  if (!hasCookie('jukoConsent')) {
+    banner.style.display = 'flex';
+  } else {
+    if (document.cookie.includes('jukoConsent=true')) loadGA();
+    setTimeout(openChat, 5000);
+  }
+
+  // Knoppen
+  accept.addEventListener('click', () => handleConsent('true'));
+  decline.addEventListener('click', () => handleConsent('false'));
+
+  // Klik buiten banner
+  window.addEventListener('click', (e) => {
+    if (!banner.contains(e.target) && banner.style.display === 'flex') {
+      banner.style.display = 'none';
     }
   });
-}, {
-  threshold: 0.5 // Start bij 50% zichtbaarheid
-});
 
-// Observe het eerste teller-element
-if (counters.length > 0) {
-  observer.observe(counters[0].parentElement.parentElement); // container observeren
-}
+  // Swiper
+  document.querySelectorAll('.projectSwiper').forEach(slider => {
+    new Swiper(slider, {
+      navigation: {
+        nextEl: slider.querySelector('.swiper-button-next'),
+        prevEl: slider.querySelector('.swiper-button-prev')
+      },
+      loop: true
+    });
+  });
 
-  </script>
+  // GLightbox
+  GLightbox({ selector: '.glightbox' });
+
+  // Counter animatie
+  const counters = document.querySelectorAll('.counter');
+  let counterStarted = false;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !counterStarted) {
+        counters.forEach(counter => {
+          const updateCount = () => {
+            const target = +counter.getAttribute('data-target');
+            const count = +counter.innerText.replace(/[^\d]/g, '');
+            const increment = Math.ceil(target / 50);
+
+            if (count < target) {
+              counter.innerText = count + increment;
+              setTimeout(updateCount, 30);
+            } else {
+              counter.innerText = target;
+            }
+          };
+          updateCount();
+        });
+        counterStarted = true;
+        observer.disconnect();
+      }
+    });
+  }, { threshold: 0.5 });
+
+  if (counters.length > 0) {
+    observer.observe(counters[0].parentElement.parentElement);
+  }
+</script>
+
 </body>
 </html>
