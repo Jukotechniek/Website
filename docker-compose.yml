@@ -7,8 +7,8 @@ services:
     ports:
       - "4500:4500" # Optional for local testing
     volumes:
-      - ./website_juko:/usr/local/apache2/htdocs/:ro
-      - ./conf/servername.conf:/usr/local/apache2/conf.d/servername.conf:ro
+      - ./website_juko:/usr/local/apache2/htdocs/
+      - ./conf/servername.conf:/usr/local/apache2/conf.d/servername.conf
     restart: unless-stopped
 
 #  database:
