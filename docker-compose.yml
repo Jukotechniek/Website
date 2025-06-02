@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  website:
+    image: httpd:alpine
+    container_name: juko_website
+    ports:
+      - "4500:4500" # Optional for local testing
+    volumes:
+      - ./website_juko:/usr/local/apache2/htdocs/:ro
+    restart: unless-stopped
+
+#  database:
+#    image: mysql:8.0
+#    container_name: juko_database
+#    environment:
+#      MYSQL_ROOT_PASSWORD: root_password
+#      MYSQL_DATABASE: juko_db
+#      MYSQL_USER: juko_user
+#      MYSQL_PASSWORD: juko_password
+#    volumes:
+#      - db_data:/var/lib/mysql
+#    restart: unless-stopped
