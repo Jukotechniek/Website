@@ -1,32 +1,29 @@
 version: '3.9'
 
-static-html:
-  image: caddy:alpine
-  container_name: juko_static_html
-  ports:
-    - "8080:80"
-  volumes:
-    - ./website_files:/usr/share/caddy
-  restart: unless-stopped
+services:
+  static-html:
+    image: caddy:alpine
+    container_name: juko_static_html
+    ports:
+      - "8080:80"
+    volumes:
+      - ./website_files:/usr/share/caddy
+    restart: unless-stopped
 
-  
-#  database:
-#    image: mysql:8.0
-#    container_name: juko_database
-#    environment:
-#      MYSQL_ROOT_PASSWORD: root_password
-#      MYSQL_DATABASE: juko_db
-#      MYSQL_USER: juko_user
-#      MYSQL_PASSWORD: juko_password
-#    volumes:
-#      - db_data:/var/lib/mysql
-#    restart: unless-stopped
+  # database:
+  #   image: mysql:8.0
+  #   container_name: juko_database
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root_password
+  #     MYSQL_DATABASE: juko_db
+  #     MYSQL_USER: juko_user
+  #     MYSQL_PASSWORD: juko_password
+  #   volumes:
+  #     - db_data:/var/lib/mysql
+  #   restart: unless-stopped
 
 # volumes:
 #   db_data:
 #     driver: local
 # Uncomment the database service if you need a MySQL database
 # Uncomment the volumes section if you need persistent storage for the database
-
-# If you already have an Nginx instance running, you can use a lightweight alternative like caddy or serve (node.js) to host static HTML.
-# Example using Caddy:
