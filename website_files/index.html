@@ -393,6 +393,8 @@ We blijven continu innoveren met nieuwe technieken en automatiseringsoplossingen
   <div id="cookie-banner">
     <p>Wij gebruiken analytische cookies om onze website te verbeteren. Door op “Accepteer” te klikken ga je hiermee akkoord.</p>
     <button id="cookie-accept">Accepteer</button>
+<button id="cookie-decline">Weiger</button>
+
   </div>
 
   <!-- JS bibliotheken -->
@@ -418,11 +420,38 @@ We blijven continu innoveren met nieuwe technieken en automatiseringsoplossingen
 
     /* Cookie-consent + GA4 */
     const banner=document.getElementById('cookie-banner'),accept=document.getElementById('cookie-accept');
-    function setCookie(n,v,d){const t=new Date();t.setTime(t.getTime()+d*864e5);document.cookie=`${n}=${v};expires=${t.toUTCString()};path=/`;}
-    function hasCookie(n){return document.cookie.split(';').some(c=>c.trim().startsWith(n+'='));}
-    function loadGA(){const GA_ID='G-ZGX0JKMFP7';const s=document.createElement('script');s.async=true;s.src=`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;document.head.appendChild(s);window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config',GA_ID,{anonymize_ip:true});}
-    if(!hasCookie('jukoConsent')){banner.style.display='flex';}else{loadGA();}
-    accept.addEventListener('click',()=>{setCookie('jukoConsent','true',365);banner.style.display='none';loadGA();});
+    const decline = document.getElementById('cookie-decline');
+
+// Tijdgebaseerde begroeting
+const chatInfo = document.querySelector('.chat-info small');
+const hours = new Date().getHours();
+let greeting = 'Hallo';
+if (hours >= 5 && hours < 12) greeting = 'Goedemorgen 👋';
+else if (hours >= 12 && hours < 18) greeting = 'Goedemiddag 👋';
+else greeting = 'Goedenavond 👋';
+chatInfo.innerHTML = `${greeting}<br/>Heb je een vraag? Ik help je graag verder via:`;
+
+// Klik buiten banner sluit deze
+window.addEventListener('click', (e) => {
+  if (!banner.contains(e.target) && banner.style.display === 'flex') {
+    banner.style.display = 'none';
+  }
+});
+
+// Knop: Accepteer
+accept.addEventListener('click', () => {
+  setCookie('jukoConsent', 'true', 365);
+  banner.style.display = 'none';
+  loadGA();
+  setTimeout(openChat, 5000);
+});
+
+// Knop: Weiger
+decline.addEventListener('click', () => {
+  setCookie('jukoConsent', 'false', 365);
+  banner.style.display = 'none';
+});
+
 
     /* Swiper initialisatie */
     document.querySelectorAll('.projectSwiper').forEach(slider=>{
