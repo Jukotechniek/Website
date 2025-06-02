@@ -416,9 +416,25 @@ We blijven continu innoveren met nieuwe technieken en automatiseringsoplossingen
     function openChat(){chatbox.classList.add('open');chatToggle.classList.add('seen');chatToggle.style.display='none';}
     function closeChat(){chatbox.classList.remove('open');chatToggle.classList.remove('seen');chatToggle.style.display='block';}
     chatToggle.addEventListener('click',openChat);chatClose.addEventListener('click',closeChat);
-    window.addEventListener('load',()=>setTimeout(openChat,5000));
+    if (!hasCookie('jukoConsent')) {
+  banner.style.display = 'flex';
+} else if (document.cookie.includes('jukoConsent=true')) {
+  loadGA();
+  setTimeout(openChat, 5000);
+}
+
 
     /* Cookie-consent + GA4 */
+    function setCookie(name, value, days) {
+  const expires = new Date(Date.now() + days * 864e5).toUTCString();
+  document.cookie = `${name}=${value}; expires=${expires}; path=/`;
+}
+
+function hasCookie(name) {
+  return document.cookie.split(';').some(c => c.trim().startsWith(name + '='));
+}
+
+    
     const banner=document.getElementById('cookie-banner'),accept=document.getElementById('cookie-accept');
     const decline = document.getElementById('cookie-decline');
 
