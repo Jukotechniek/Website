@@ -5,7 +5,7 @@ services:
     image: caddy:alpine
     container_name: juko_static_html
     ports:
-      - "8080:80"
+      - "8090:90"
     volumes:
       - ./website_files:/usr/share/caddy
     restart: unless-stopped
