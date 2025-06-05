@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+Hoe kan het dat deze code 764 regels nodig heeft <!DOCTYPE html>
 <html lang="nl">
 <head>
   <meta charset="UTF-8" />
@@ -224,6 +224,29 @@
     text-align: left;
   }
 }
+.lang-switch {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-left: 1rem;
+}
+
+.lang-btn {
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  transition: 0.2s;
+  font-size: 0.9rem;
+}
+
+.lang-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.lang-btn.active {
+  color: #fff;
+  background: var(--primary);
+}
 
 
   </style>
@@ -248,24 +271,38 @@
 
 <body>
   <!-- Header -->
-  <header>
-    <div class="container nav">
-      <a href="#home" class="nav__logo"><img src="img/logo_1.svg" alt="Logo Juko Techniek" height="70" /></a>
-      <nav class="nav__links">
-        <a href="#diensten">Diensten</a><a href="#projecten">Projecten</a><a href="#overons">Over ons</a><a href="#contact">Contact</a>
-      </nav>
-      <div class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></div>
-    </div>
-    <div class="container mobile-menu" id="mobileMenu">
-      <a href="#diensten" onclick="toggleMenu()">Diensten</a><a href="#projecten" onclick="toggleMenu()">Projecten</a><a href="#overons" onclick="toggleMenu()">Over ons</a><a href="#contact" onclick="toggleMenu()">Contact</a>
-    </div>
-  </header>
+<header>
+  <div class="container nav">
+    <a href="#home" class="nav__logo"><img src="img/logo_1.svg" alt="Logo Juko Techniek" height="70" /></a>
+    <nav class="nav__links">
+      <a href="#diensten">Diensten</a>
+      <a href="#projecten">Projecten</a>
+      <a href="#overons">Over ons</a>
+      <a href="#contact">Contact</a>
+      <div class="lang-switch">
+        <a href="index.html" class="lang-btn active">NL</a>
+        <a href="index-en.html" class="lang-btn">EN</a>
+      </div>
+    </nav>
+    <div class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></div>
+  </div>
+  <div class="container mobile-menu" id="mobileMenu">
+    <a href="#diensten" onclick="toggleMenu()">Diensten</a>
+    <a href="#projecten" onclick="toggleMenu()">Projecten</a>
+    <a href="#overons" onclick="toggleMenu()">Over ons</a>
+    <a href="#contact" onclick="toggleMenu()">Contact</a>
+    <div class="lang-switch">
+    <a href="index.html" class="lang-btn active">NL</a>
+    <a href="index-en.html" class="lang-btn">EN</a>
+  </div>
+</header>
+
 
   <!-- Hero -->
   <section class="hero" id="home">
     <div class="hero__content">
       <h1 class="hero__title">Uw partner in <span>industriële</span><br />automatisering</h1>
-      <p style="max-width:600px;margin:1rem auto 2.5rem;">Wij combineren vakmanschap met moderne technologie om storingen te voorkomen en processen te verbeteren.</p>
+      <p style="max-width:600px;margin:1rem auto 2.5rem; font-size:1.25rem;">Wij combineren vakmanschap met moderne technologie om storingen te voorkomen en processen te verbeteren.</p>
       <a href="#contact" class="btn">Neem contact op</a>
     </div>
   </section>
@@ -310,9 +347,11 @@
     </div>
   </section>
 
-  <!-- Over ons -->
-<section id="overons" style="text-align: center;">
-  <h2>Over ons</h2>
+  <section id="about" style="text-align: center;">
+    <section id="about" style="text-align: center;">
+  <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">
+    Over ons
+    </h2>
   <p>Juko Techniek B.V. is een jong en ambitieus bedrijf gespecialiseerd in:</p>
   <ul style="display: inline-block; text-align: left;">
     <li>Industriële dienstverlening</li>
@@ -670,29 +709,47 @@
     }
   });
 
-  // Swiper
-  document.querySelectorAll('.projectSwiper').forEach(slider => {
-    new Swiper(slider, {
-      navigation: {
-        nextEl: slider.querySelector('.swiper-button-next'),
-        prevEl: slider.querySelector('.swiper-button-prev')
-      },
-      loop: true
-    });
+ // Swiper
+document.querySelectorAll('.projectSwiper').forEach(slider => {
+  new Swiper(slider, {
+    navigation: {
+      nextEl: slider.querySelector('.swiper-button-next'),
+      prevEl: slider.querySelector('.swiper-button-prev')
+    },
+    loop: true
   });
+});
+
+// Zorg dat klikken op de navigatiepijltjes niet doorklikt naar de .project__card
+document.querySelectorAll('.swiper-button-next, .swiper-button-prev').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+  });
+});
+
+// 1) Maak één GLightbox-instantie voor alle .glightbox-links
+const gallery = GLightbox({
+  selector: '.glightbox',
+  loop: true,
+  zoomable: true
+});
+
+// 2) Vervang de oude “link.click()”-logica door deze:
+document.querySelectorAll('.project__card').forEach(card => {
+  card.addEventListener('click', () => {
+    // Vind de eerste <a class="glightbox"> binnen deze kaart
+    const firstLink = card.querySelector('a.glightbox');
+    if (!firstLink) return;
+
+    // Lees het data-gallery attribuut (bijv. "p1", "p2", "p3")
+    const galleryId = firstLink.getAttribute('data-gallery');
+
+    // Open de Lightbox-galerij voor deze kaart, start op slide-index 0
+    gallery.open({ gallery: galleryId, startAt: 0 });
+  });
+});
 
   
-  // GLightbox
-  GLightbox({ selector: '.glightbox' });
-  // Zorg dat bij klik op hele project__card de juiste glightbox opent
-  document.querySelectorAll('.project__card').forEach(card => {
-    card.addEventListener('click', () => {
-      const link = card.querySelector('.glightbox');
-      if (link) link.click(); // Simuleert klik op eerste image
-    });
-  });
-
-
   // Counter animatie
   const counters = document.querySelectorAll('.counter');
   let counterStarted = false;
@@ -727,4 +784,4 @@
 </script>
 
 </body>
-</html>
+</html> 
