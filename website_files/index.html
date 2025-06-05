@@ -709,18 +709,7 @@ Hoe kan het dat deze code 764 regels nodig heeft <!DOCTYPE html>
     }
   });
 
-  // Swiper
-document.querySelectorAll('.projectSwiper').forEach(slider => {
-  new Swiper(slider, {
-    navigation: {
-      nextEl: slider.querySelector('.swiper-button-next'),
-      prevEl: slider.querySelector('.swiper-button-prev')
-    },
-    loop: true
-  });
-});
-
-// Zorg dat klikken op de navigatiepijltjes niet doorklikt naar de .project__card
+ // Zorg dat klikken op de navigatiepijltjes niet doorklikt naar de .project__card
 document.querySelectorAll('.swiper-button-next, .swiper-button-prev').forEach(btn => {
   btn.addEventListener('click', function(e) {
     e.stopPropagation();
@@ -748,8 +737,7 @@ document.querySelectorAll('.project__card').forEach(card => {
     gallery.open({ gallery: galleryId, startAt: 0 });
   });
 });
-
-
+  
   // Counter animatie
   const counters = document.querySelectorAll('.counter');
   let counterStarted = false;
@@ -784,4 +772,4 @@ document.querySelectorAll('.project__card').forEach(card => {
 </script>
 
 </body>
-</html>  en wacht tot ik de volgende code stuur om ze te vergeleiken
+</html> 
