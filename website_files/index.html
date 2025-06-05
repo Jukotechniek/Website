@@ -267,6 +267,13 @@
     document.getElementById('modalImage').src = image;
     document.getElementById('dienstModal').style.display = 'flex';
   }
+  // ↓ Voeg deze code toe om op klikken buiten de witte modal te sluiten:
+    const overlay = document.getElementById('dienstModal');
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) {
+        overlay.style.display = 'none';
+      }
+    });
 </script>
 
 <body>
