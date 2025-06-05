@@ -5,6 +5,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Juko Techniek B.V. | Industriële automatisering</title>
+  <!-- Favicon voor alle platformen -->
+<link rel="icon" type="image/png" sizes="32x32" href="/website_files/favicon_jt.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/website_files/favicon_jt.png" />
+<link rel="icon" type="image/x-icon" href="/website_files/favicon_jt.ico"/>
+<meta name="theme-color" content="#e20815" />
+
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -52,7 +58,12 @@
     /* ---------- Services ---------- */
     .services{display:grid;gap:2rem;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
     .service{background:#fff;border:1px solid #eee;padding:2rem 1.5rem;border-radius:8px;text-align:center;transition:.2s}
-    .service:hover{box-shadow:0 12px 25px rgba(0,0,0,.08)}
+    .service:hover {
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e20815;
+  transform: translateY(-2px);
+  transition: all 0.2s ease-in-out;
+}
     .service__icon{font-size:2.5rem;color:var(--primary);margin-bottom:1rem}
     .service__title{font-weight:600;margin-bottom:.5rem}
 
@@ -68,7 +79,44 @@
     .project__content{padding:1.5rem;text-align:left}
     .project__content h3{margin-top:0;font-size:1.2rem}
     .project__content p{margin-top:.5rem;color:#444}
-
+    .project__card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.07);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer; /* belangrijk! */
+}
+.service {
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 2rem 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  transition: 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+.service__link {
+  margin-top: auto;
+  font-weight: 600;
+  color: #e20815;
+  display: inline-block;
+  margin-top: 1.5rem;
+}
+.project__card:hover,
+.project__card:focus {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  border: 1px solid #e20815; /* rode rand */
+  transform: scale(1.01);
+}
+.service {
+  cursor: pointer; /* maakt hele box klikbaar qua gevoel */
+}
     .swiper-button-next,.swiper-button-prev{color:var(--primary)}
 
     /* ---------- Contact ---------- */
@@ -157,9 +205,36 @@
     font-size: 10px;
   }
 }
+@media (max-width: 600px) {
+  #overons {
+    padding-left: 1.2rem;
+    padding-right: 1.2rem;
+  }
+  #overons p, #overons ul {
+    text-align: left;
+  }
+}
+
 
   </style>
 </head>
+<div id="dienstModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:2000; align-items:center; justify-content:center;">
+  <div style="background:#fff; padding:2rem; border-radius:10px; max-width:600px; width:90%; position:relative; text-align:left;">
+    <button onclick="document.getElementById('dienstModal').style.display='none'" style="position:absolute; top:10px; right:15px; font-size:18px; border:none; background:none; cursor:pointer;">&times;</button>
+    <img id="modalImage" src="" alt="Detail" style="width:100%; border-radius:8px; margin-bottom:1rem;" />
+    <h3 id="modalTitle" style="margin-top:0"></h3>
+    <p id="modalText"></p>
+  </div>
+</div>
+
+<script>
+  function openDienstModal(title, text, image) {
+    document.getElementById('modalTitle').innerText = title;
+    document.getElementById('modalText').innerText = text;
+    document.getElementById('modalImage').src = image;
+    document.getElementById('dienstModal').style.display = 'flex';
+  }
+</script>
 
 <body>
   <!-- Header -->
@@ -191,22 +266,61 @@
       <h2 class="section-title">Wat wij doen</h2>
       <p class="section-subtitle">Expertise in elke fase van industriële automatisering.</p>
       <div class="services">
-        <div class="service"><div class="service__icon">⚙️</div><h3 class="service__title">Besturingen</h3><p>U levert de uitdaging, wij de oplossing.</p></div>
-        <div class="service"><div class="service__icon">📈</div><h3 class="service__title">Procesoptimalisatie</h3><p>Minder stilstand, meer efficiëntie.</p></div>
-        <div class="service"><div class="service__icon">🛠️</div><h3 class="service__title">Industriële dienstverlening</h3><p>Eén aanspreekpunt voor installatie, storingen en upgrades.</p></div>
-        <div class="service"><div class="service__icon">📋</div><h3 class="service__title">Projectmanagement</h3><p>Van idee tot resultaat: wij begeleiden elke stap.</p></div>
+ <div class="service" onclick="openDienstModal('Compact besturingspaneel voor tekstweergave op een monitor', 'Wij ontwerpen, bouwen en moderniseren besturingskasten en systemen op maat voor elk type industriële toepassing.', 'img/Foto schakelkast boven.jpeg')">
+    <div class="service__icon">⚙️</div>
+    <h3 class="service__title">Besturingen</h3>
+    <p>U levert de uitdaging, wij de oplossing.</p>
+    <span class="service__link">Meer informatie →</span>
+
+  </div>
+
+  <div class="service" onclick="openDienstModal('Update Danfoss Profinet-kaarten', 'Slimme oplossingen om uw productieproces efficiënter en toekomstbestendig te maken.', 'img/Danfoss Regelaars.jpg')">
+    <div class="service__icon">📈</div>
+    <h3 class="service__title">Procesoptimalisatie</h3>
+    <p>Minder stilstand, meer efficiëntie.</p>
+    <span class="service__link">Meer informatie →</span>
+  </div>
+
+  <div class="service" onclick="openDienstModal('Geholpen bij de installatie van een machine voor een machinebouwer', 'Installatie, onderhoud en storingsdienst voor industriële installaties. 24/7 bereikbaar.', 'img/Installatie.jpeg')">
+    <div class="service__icon">🛠️</div>
+    <h3 class="service__title">Industriële dienstverlening</h3>
+    <p>Eén aanspreekpunt voor installatie, storingen en aanpassingen.</p>
+    <span class="service__link">Meer informatie →</span>
+  </div>
+
+  <div class="service" onclick="openDienstModal('Chatbot met eigen database AI gedreven', 'Slimme software-oplossingen met focus op integraties en AI-gedreven automatisering.', 'img/Jukobot.png')">
+    <div class="service__icon">💻</div>
+    <h3 class="service__title">Software automatisering</h3>
+    <p>Boost uw productiviteit met AI-gedreven automatisering en naadloze software-integraties.</p>
+    <span class="service__link">Meer informatie →</span>
+  </div>
+</div>
+
       </div>
     </div>
   </section>
 
   <!-- Over ons -->
-<section id="overons">
-  <div class="container">
-    <h2 class="section-title">Over ons</h2>
-    <p class="section-subtitle">Juko Techniek B.V. is een jong en ambitieus bedrijf gespecialiseerd in industriële dienstverlening, projectbegeleiding, maatwerkautomatisering, productieoptimalisatie en het voorkomen van storingen.</p>
-    <p style="max-width:800px;margin:0 auto;text-align:center;">Vanuit een jonge en ambitieuze visie bouwen wij aan slimme oplossingen voor de industrie. Met maatwerk in besturingstechniek, procesoptimalisatie en technische service zorgen wij dat installaties betrouwbaar draaien.
-We blijven continu innoveren met nieuwe technieken en automatiseringsoplossingen om onze klanten klaar te maken voor de toekomst van productie.</p>
-  </div>
+<section id="overons" style="text-align: center;">
+  <h2>Over ons</h2>
+  <p>Juko Techniek B.V. is een jong en ambitieus bedrijf gespecialiseerd in:</p>
+  <ul style="display: inline-block; text-align: left;">
+    <li>Industriële dienstverlening</li>
+    <li>Projectbegeleiding</li>
+    <li>Maatwerk automatisering</li>
+    <li>Software automatisering</li>
+    <li>Productie optimalisatie</li>
+    <li>Het oplossen van terugkerende storingen</li>
+  </ul>
+
+  <p style="margin-top: 2rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+    Vanuit een toekomstgerichte visie bouwen wij aan slimme oplossingen voor de industrie.<br>
+    Met maatwerk in besturingstechniek, procesoptimalisatie en technische service zorgen wij dat installaties betrouwbaar draaien.<br><br>
+    Daarbij maken wij steeds vaker gebruik van AI-gedreven automatisering en slimme systeemintegraties.<br>
+    Zo blijven we continu innoveren om onze klanten klaar te maken voor de toekomst van productie en industriële digitalisering.
+  </p>
+</section>
+
 
   <!-- USP Tellersectie -->
   <section style="padding:4rem 0;">
@@ -251,75 +365,78 @@ We blijven continu innoveren met nieuwe technieken en automatiseringsoplossingen
 
       <!-- Projectkaart 1 -->
       <div class="project__card">
-        <div class="swiper projectSwiper">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <a href="img/Baconsorteerder programeren_v1.jpg" class="glightbox" data-gallery="p1">
-                <img src="img/Baconsorteerder programeren_v1.jpg" alt="Automatisering verdeelbaan – foto 1">
-              </a>
-            </div>
-            <div class="swiper-slide">
-              <a href="img/Bekabelen.jpg" class="glightbox" data-gallery="p1">
-                <img src="img/Bekabelen.jpg" alt="Automatisering verdeelbaan – foto 2">
-              </a>
-            </div>
-          </div>
-          <div class="swiper-button-next"></div>
-          <div class="swiper-button-prev"></div>
-        </div>
-        <div class="project__content">
-          <h3>Automatisering verdeelbaan</h3>
-          <p>Besturing gemaakt voor een baconsorteerder. Met instelbare timer zodat tijd ingesteld kan worden wanneer sorteerder moet schakelen.</p>
-        </div>
+  <div class="swiper projectSwiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <a href="img/Baconsorteerder programeren_v1.jpg" class="glightbox" data-gallery="p1">
+          <img src="img/Baconsorteerder programeren_v1.jpg" alt="Automatisering verdeelbaan – foto 1">
+        </a>
       </div>
+      <div class="swiper-slide">
+        <a href="img/Bekabelen.jpg" class="glightbox" data-gallery="p1">
+          <img src="img/Bekabelen.jpg" alt="Automatisering verdeelbaan – foto 2">
+        </a>
+      </div>
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+  <div class="project__content">
+    <h3>Automatisering verdeelbaan</h3>
+    <p>Besturing gemaakt voor een baconsorteerder. Met instelbare timer zodat tijd ingesteld kan worden wanneer sorteerder moet schakelen.</p>
+  </div>
+</div>
+
 
       <!-- Projectkaart 2 -->
       <div class="project__card">
-        <div class="swiper projectSwiper">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <a href="img/Foto A Boven.jpeg" class="glightbox" data-gallery="p2">
-                <img src="img/Foto A Boven.jpeg" alt="Retrofit bottelmachine – foto 1">
-              </a>
-            </div>
-            <div class="swiper-slide">
-              <a href="img/Foto A Beneden.jpg" class="glightbox" data-gallery="p2">
-                <img src="img/Foto A Beneden.jpg" alt="Retrofit bottelmachine – foto 2">
-              </a>
-            </div>
-          </div>
-          <div class="swiper-button-next"></div>
-          <div class="swiper-button-prev"></div>
-        </div>
-        <div class="project__content">
-          <h3>Visuele productklasse weergave</h3>
-          <p>Een efficiënt systeem waarbij de actuele productklasse duidelijk word weergegeven op schermen op twee verdiepingen. Dit bevordert communicatie tussen de 2 verdiepingen.</p>
-        </div>
+  <div class="swiper projectSwiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <a href="img/Foto A Boven.jpeg" class="glightbox" data-gallery="p2">
+          <img src="img/Foto A Boven.jpeg" alt="A boven – foto 1">
+        </a>
       </div>
+      <div class="swiper-slide">
+        <a href="img/Foto A Beneden.jpg" class="glightbox" data-gallery="p2">
+          <img src="img/Foto A Beneden.jpg" alt="A beneden – foto 2">
+        </a>
+      </div>
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+  <div class="project__content">
+    <h3>Visuele productklasse weergave</h3>
+    <p>Een efficiënt systeem waarbij de actuele productklasse duidelijk word weergegeven op schermen op twee verdiepingen. Dit bevordert communicatie tussen de 2 verdiepingen.</p>
+  </div>
+</div>
+
 
       <!-- Projectkaart 3 -->
-      <div class="project__card">
-        <div class="swiper projectSwiper">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <a href="img/Danfoss_Update.jpeg" class="glightbox" data-gallery="p3">
-                <img src="img/Danfoss_Update.jpeg" alt="AGV-magazijn – foto 1">
-              </a>
-            </div>
-            <div class="swiper-slide">
-              <a href="img/Danfoss Kaarten.jpeg" class="glightbox" data-gallery="p3">
-                <img src="img/Danfoss Kaarten.jpeg" alt="AGV-magazijn – foto 2">
-              </a>
-            </div>
-          </div>
-          <div class="swiper-button-next"></div>
-          <div class="swiper-button-prev"></div>
-        </div>
-        <div class="project__content">
-          <h3>Firmware update Danfoss</h3>
-          <p>De firmware van Danfoss profinet kaarten updaten naar de laatste versie.</p>
-        </div>
+     <div class="project__card">
+  <div class="swiper projectSwiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <a href="img/Danfoss_Update.jpeg" class="glightbox" data-gallery="p3">
+          <img src="img/Danfoss_Update.jpeg" alt="Danfoss update – foto 1">
+        </a>
       </div>
+      <div class="swiper-slide">
+        <a href="img/Danfoss Kaarten.jpeg" class="glightbox" data-gallery="p3">
+          <img src="img/Danfoss Kaarten.jpeg" alt="Danfoss Kaarten – foto 2">
+        </a>
+      </div>
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+  <div class="project__content">
+    <h3>Firmware update Danfoss</h3>
+    <p>De firmware van Danfoss profinet kaarten updaten naar de laatste versie.</p>
+  </div>
+</div>
+
 
     </div>
   </section>
@@ -389,11 +506,55 @@ We blijven continu innoveren met nieuwe technieken en automatiseringsoplossingen
   </div>
   <button id="chat-toggle" aria-label="Open chat">💬</button>
 
-  <!-- Cookie-banner -->
-  <div id="cookie-banner">
-    <p>Wij gebruiken analytische cookies om onze website te verbeteren. Door op “Accepteer” te klikken ga je hiermee akkoord.</p>
-    <button id="cookie-accept">Accepteer</button>
-<button id="cookie-decline">Weiger</button>
+   <!-- Cookie-banner -->
+  <div id="cookie-banner" style="
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  color: #1d1d1b;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, .12);
+  padding: 1.2rem 1.5rem;
+  display: none;
+  flex-wrap: wrap;
+  z-index: 1200;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #000;
+  max-width: 420px;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+">
+  <p style="margin: 0; flex: 1 1 100%; font-size: .95rem;">
+    We gebruiken analytische cookies om onze website te verbeteren. Deze gegevens zijn anoniem en niet herleidbaar.
+  </p>
+
+  <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+    <button id="cookie-accept" style="
+      background: #20c997;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 24px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+    ">Accepteren</button>
+
+    <button id="cookie-decline" style="
+      background: none;
+      border: none;
+      padding: 10px 10px;
+      color: #666;
+      font-size: 1rem;
+      cursor: pointer;
+    ">Nee bedankt</button>
+  </div>
+</div>
+
 
   </div>
 
@@ -510,8 +671,17 @@ We blijven continu innoveren met nieuwe technieken en automatiseringsoplossingen
     });
   });
 
+  
   // GLightbox
   GLightbox({ selector: '.glightbox' });
+  // Zorg dat bij klik op hele project__card de juiste glightbox opent
+  document.querySelectorAll('.project__card').forEach(card => {
+    card.addEventListener('click', () => {
+      const link = card.querySelector('.glightbox');
+      if (link) link.click(); // Simuleert klik op eerste image
+    });
+  });
+
 
   // Counter animatie
   const counters = document.querySelectorAll('.counter');
