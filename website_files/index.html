@@ -166,6 +166,23 @@
 
   </style>
 </head>
+<div id="dienstModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:2000; align-items:center; justify-content:center;">
+  <div style="background:#fff; padding:2rem; border-radius:10px; max-width:600px; width:90%; position:relative; text-align:left;">
+    <button onclick="document.getElementById('dienstModal').style.display='none'" style="position:absolute; top:10px; right:15px; font-size:18px; border:none; background:none; cursor:pointer;">&times;</button>
+    <img id="modalImage" src="" alt="Detail" style="width:100%; border-radius:8px; margin-bottom:1rem;" />
+    <h3 id="modalTitle" style="margin-top:0"></h3>
+    <p id="modalText"></p>
+  </div>
+</div>
+
+<script>
+  function openDienstModal(title, text, image) {
+    document.getElementById('modalTitle').innerText = title;
+    document.getElementById('modalText').innerText = text;
+    document.getElementById('modalImage').src = image;
+    document.getElementById('dienstModal').style.display = 'flex';
+  }
+</script>
 
 <body>
   <!-- Header -->
@@ -197,22 +214,57 @@
       <h2 class="section-title">Wat wij doen</h2>
       <p class="section-subtitle">Expertise in elke fase van industriële automatisering.</p>
       <div class="services">
-        <div class="service"><div class="service__icon">⚙️</div><h3 class="service__title">Besturingen</h3><p>Jij levert de uitdaging, wij de oplossing.</p></div>
-        <div class="service"><div class="service__icon">📈</div><h3 class="service__title">Procesoptimalisatie</h3><p>Minder stilstand, meer efficiëntie.</p></div>
-        <div class="service"><div class="service__icon">🛠️</div><h3 class="service__title">Industriële dienstverlening</h3><p>Eén aanspreekpunt voor installatie, storingen en upgrades.</p></div>
-        <div class="service"><div class="service__icon">📋</div><h3 class="service__title">Projectmanagement</h3><p>Van idee tot resultaat: wij begeleiden elke stap.</p></div>
+  <div class="service" onclick="openDienstModal('Compact besturingspaneel voor tekstweergave op een monitor', 'Wij ontwerpen, bouwen en moderniseren besturingskasten en systemen op maat voor elk type industriële toepassing.', 'img/Foto schakelkast boven.jpeg')">
+    <div class="service__icon">⚙️</div>
+    <h3 class="service__title">Besturingen</h3>
+    <p>U levert de uitdaging, wij de oplossing.</p>
+  </div>
+
+  <div class="service" onclick="openDienstModal('Update Danfoss Profinet-kaarten', 'Slimme oplossingen om uw productieproces efficiënter en toekomstbestendig te maken.', 'img/Danfoss Regelaars.jpg')">
+    <div class="service__icon">📈</div>
+    <h3 class="service__title">Procesoptimalisatie</h3>
+    <p>Minder stilstand, meer efficiëntie.</p>
+  </div>
+
+  <div class="service" onclick="openDienstModal('Geholpen bij de installatie van een machine voor een machinebouwer', 'Installatie, onderhoud en storingsdienst voor industriële installaties. 24/7 bereikbaar.', 'img/Installatie.jpeg')">
+    <div class="service__icon">🛠️</div>
+    <h3 class="service__title">Industriële dienstverlening</h3>
+    <p>Eén aanspreekpunt voor installatie, storingen en aanpassingen.</p>
+  </div>
+
+  <div class="service" onclick="openDienstModal('Chatbot met eigen database met AI', 'Slimme software-oplossingen met focus op integraties en AI-gedreven automatisering.', 'img/Jukobot.png')">
+    <div class="service__icon">💻</div>
+    <h3 class="service__title">Software automatisering</h3>
+    <p>Boost uw productiviteit met AI-gedreven automatisering en naadloze software-integraties.</p>
+  </div>
+</div>
+
+
       </div>
     </div>
   </section>
 
   <!-- Over ons -->
-<section id="overons">
-  <div class="container">
-    <h2 class="section-title">Over ons</h2>
-    <p class="section-subtitle">Juko Techniek B.V. is een jong en ambitieus bedrijf gespecialiseerd in industriële dienstverlening, projectbegeleiding, maatwerkautomatisering, productieoptimalisatie en het voorkomen van storingen.</p>
-    <p style="max-width:800px;margin:0 auto;text-align:center;">Vanuit een jonge en ambitieuze visie bouwen wij aan slimme oplossingen voor de industrie. Met maatwerk in besturingstechniek, procesoptimalisatie en technische service zorgen wij dat installaties betrouwbaar draaien.
-We blijven continu innoveren met nieuwe technieken en automatiseringsoplossingen om onze klanten klaar te maken voor de toekomst van productie.</p>
-  </div>
+<section style="text-align: center;">
+  <h2>Over ons</h2>
+  <p>Juko Techniek B.V. is een jong en ambitieus bedrijf gespecialiseerd in:</p>
+  <ul style="display: inline-block; text-align: left;">
+    <li>Industriële dienstverlening</li>
+    <li>Projectbegeleiding</li>
+    <li>Maatwerk automatisering</li>
+    <li>Software automatisering</li>
+    <li>Productie optimalisatie</li>
+    <li>Het oplossen van terugkerende storingen</li>
+  </ul>
+
+  <p style="margin-top: 2rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+    Vanuit een toekomstgerichte visie bouwen wij aan slimme oplossingen voor de industrie.
+    Met maatwerk in besturingstechniek, procesoptimalisatie en technische service zorgen wij dat installaties betrouwbaar draaien.
+    Daarbij maken wij steeds vaker gebruik van AI-gedreven automatisering en slimme systeemintegraties.
+    Zo blijven we continu innoveren om onze klanten klaar te maken voor de toekomst van productie en industriële digitalisering.
+  </p>
+</section>
+
 
   <!-- USP Tellersectie -->
   <section style="padding:4rem 0;">
@@ -395,11 +447,55 @@ We blijven continu innoveren met nieuwe technieken en automatiseringsoplossingen
   </div>
   <button id="chat-toggle" aria-label="Open chat">💬</button>
 
-  <!-- Cookie-banner -->
-  <div id="cookie-banner">
-    <p>Wij gebruiken analytische cookies om onze website te verbeteren. Door op “Accepteer” te klikken ga je hiermee akkoord.</p>
-    <button id="cookie-accept">Accepteer</button>
-<button id="cookie-decline">Weiger</button>
+   <!-- Cookie-banner -->
+  <div id="cookie-banner" style="
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  color: #1d1d1b;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, .12);
+  padding: 1.2rem 1.5rem;
+  display: none;
+  flex-wrap: wrap;
+  z-index: 1200;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #000;
+  max-width: 420px;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+">
+  <p style="margin: 0; flex: 1 1 100%; font-size: .95rem;">
+    We gebruiken analytische cookies om onze website te verbeteren. Deze gegevens zijn anoniem en niet herleidbaar.
+  </p>
+
+  <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+    <button id="cookie-accept" style="
+      background: #20c997;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 24px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+    ">Accepteren</button>
+
+    <button id="cookie-decline" style="
+      background: none;
+      border: none;
+      padding: 10px 10px;
+      color: #666;
+      font-size: 1rem;
+      cursor: pointer;
+    ">Nee bedankt</button>
+  </div>
+</div>
+
 
   </div>
 
