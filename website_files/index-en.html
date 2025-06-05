@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Juko Techniek B.V. | Industrial Automation</title>
+  <!-- Favicon for all platforms -->
+  <link rel="icon" type="image/png" sizes="32x32" href="Favicon_Juko.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="Favicon_Juko.png" />
+  <link rel="icon" type="image/x-icon" href="Juko_Favicon.ico" />
+  <meta name="theme-color" content="#e20815" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Juko Techniek B.V.",
+    "url": "https://www.jukotechniek.nl",
+    "logo": "https://www.jukotechniek.nl/Juko_Favicon.ico"
+  }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <!-- GLightbox CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+
+  <!-- Custom styles -->
+  <style>
+    :root { --primary: #e20815; --dark: #1d1d1b; --light: #fff; }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; font-family: 'Inter', sans-serif; color: var(--dark); line-height: 1.6; scroll-behavior: smooth; }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ---------- Header ---------- */
+    header { position: fixed; top: 0; left: 0; width: 100%; background: rgba(255,255,255,.9); backdrop-filter: blur(8px); border-bottom: 1px solid #ececec; z-index: 1000; }
+    .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; }
+    .nav__links { display: flex; gap: 2rem; }
+    .nav__links a { font-weight: 500; transition: .2s; }
+    .nav__links a:hover { color: var(--primary); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 24px; height: 3px; background: var(--dark); }
+    .mobile-menu { display: none; flex-direction: column; gap: 1rem; padding: 1rem 0; }
+
+    /* ---------- Hero ---------- */
+    .hero { position: relative; min-height: 100vh; background: url('img/Baconsorteerder programeren_v1.jpg') center/cover no-repeat; background-position: center 30%; display: flex; align-items: center; justify-content: center; text-align: center; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,.6); }
+    .hero__content { position: relative; color: #fff; padding: 0 1rem; }
+    .hero__title { font-size: clamp(2rem,5vw,3.5rem); font-weight: 600; line-height: 1.2; }
+    .hero__title span { color: var(--primary); }
+    .btn { display: inline-block; background: var(--primary); color: #fff; padding: .9rem 2.5rem; border-radius: 4px; font-weight: 500; transition: .2s; }
+    .btn:hover { background: #c80712; }
+
+    /* ---------- Sections ---------- */
+    section { padding: 4.5rem 0; }
+    h2.section-title { text-align: center; font-size: clamp(1.75rem,3.5vw,2.5rem); margin-bottom: 1rem; }
+    .section-subtitle { text-align: center; max-width: 640px; margin: 0 auto 3rem; color: #555; font-size: 1.2rem; }
+
+    /* ---------- Services ---------- */
+    .services { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); }
+    .service { background: #fff; border: 1px solid #eee; padding: 2rem 1.5rem; border-radius: 8px; text-align: center; transition: .2s; display: flex; flex-direction: column; justify-content: space-between; height: 100%; cursor: pointer; }
+    .service:hover {
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e20815;
+      transform: translateY(-2px);
+      transition: all 0.2s ease-in-out;
+    }
+    .service__icon { font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem; }
+    .service__title { font-weight: 600; margin-bottom: .5rem; }
+    .service__link { margin-top: auto; font-weight: 600; color: #e20815; display: inline-block; margin-top: 1.5rem; }
+
+    /* ---------- Project Cards ---------- */
+    .projecten { text-align: center; padding: 4rem 2rem; background: #f9f9f9; }
+    .projecten__titel { font-size: 2.5rem; margin-bottom: .5rem; }
+    .projecten__sub { font-size: 1.1rem; color: #666; margin-bottom: 3rem; }
+    .projecten__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+
+    .project__card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,.07); display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
+    .project__card .swiper { position: relative; width: 100%; height: 250px; border-radius: 12px 12px 0 0; overflow: hidden; }
+    .project__card .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
+    .project__content { padding: 1.5rem; text-align: left; }
+    .project__content h3 { margin-top: 0; font-size: 1.2rem; }
+    .project__content p { margin-top: .5rem; color: #444; }
+    .project__card:hover,
+    .project__card:focus {
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      border: 1px solid #e20815;
+      transform: scale(1.01);
+    }
+    .swiper-button-next, .swiper-button-prev { color: var(--primary); }
+
+    /* ---------- Contact ---------- */
+    .contact { background: var(--dark); color: #fff; }
+    .contact-grid { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); margin-top: 2rem; }
+    .contact-item { display: flex; gap: .75rem; align-items: flex-start; }
+    .contact-icon { color: var(--primary); margin-top: 4px; }
+
+    /* ---------- Footer ---------- */
+    footer { background: #f5f5f5; padding: 1.2rem 0; text-align: center; font-size: .875rem; color: #666; }
+
+    /* ---------- Chat (unchanged) ---------- */
+    #chat-toggle { position: fixed; bottom: 20px; right: 20px; background: #20c997; color: #fff; font-size: 24px; border: none; border-radius: 50%; width: 56px; height: 56px; box-shadow: 0 4px 12px rgba(0,0,0,.2); cursor: pointer; z-index: 1099; }
+    #chat-toggle::after { content: '1'; position: absolute; top: -5px; right: -5px; background: red; color: #fff; font-size: 12px; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+    #chat-toggle.seen::after { display: none; }
+
+    .chatbot { position: fixed; bottom: 100px; right: 20px; display: none; flex-direction: column; align-items: flex-start; z-index: 1100; }
+    .chatbot.open { display: flex; }
+    .chatbot-inner { position: relative; }
+    .chat-close { position: absolute; top: -12px; right: -12px; background: var(--dark); color: #fff; border: none; width: 26px; height: 26px; border-radius: 50%; cursor: pointer; font-size: 18px; line-height: 26px; }
+    .chat-ballon { background: #fff; border-radius: 12px; padding: 14px 16px; box-shadow: 0 4px 20px rgba(0,0,0,.15); display: flex; gap: 12px; align-items: center; max-width: 360px; margin-bottom: 10px; }
+    .chat-ballon img { width: 48px; height: 48px; border-radius: 50%; }
+    .chat-info strong { font-size: 16px; color: #000; }
+    .chat-info small { font-size: 14px; color: #000; display: block; margin-top: 4px; line-height: 1.4; }
+    .chat-buttons { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; justify-content: center; }
+    .chat-btn { background: #fff; border: 1px solid #000; border-radius: 999px; padding: 14px 26px; font-weight: 500; font-size: 16px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,.08); transition: .2s; text-align: center; white-space: nowrap; width: 100%; }
+    .chat-btn:hover { background: #8e8e8e; }
+    .chat-btn.green { background: #20c997; color: #fff; border: none; }
+    .chat-btn.green:hover { background: #1aa179; }
+    .phone-btn { grid-column: 1/-1; justify-self: center; width: 50%; }
+
+    /* ---------- Cookie-banner ---------- */
+    #cookie-banner { position: fixed; left: 50%; top: 50%; transform: translate(-50%,-50%); background: #fff; color: #1d1d1b; box-shadow: 0 8px 12px rgba(0,0,0,.12); padding: 1rem 1.2rem; display: none; flex-wrap: wrap; z-index: 1200; gap: 12px; align-items: center; justify-content: center; border: 1px solid #000; max-width: 420px; border-radius: 8px; }
+    #cookie-banner p { margin: 0; flex: 1 1 280px; font-size: .9rem; text-align: center; }
+    #cookie-banner button { background: #e20815; color: #fff; border: none; border-radius: 4px; padding: .6rem 1.4rem; cursor: pointer; font-weight: 500; }
+    #cookie-banner button:hover { background: #b90712; }
+
+    /* Responsive (menu) */
+    @media (max-width: 768px) {
+      .nav__links { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: none; flex-direction: column; }
+      .mobile-menu.open { display: flex; }
+    }
+    @media (max-width: 480px) {
+      .chatbot-inner { transform: scale(0.9); transform-origin: bottom right; }
+      .chat-ballon img { width: 40px; height: 40px; }
+      .chat-ballon { padding: 10px 12px; gap: 8px; }
+      .chat-info strong { font-size: 14px; }
+      .chat-info small { font-size: 12px; }
+      .chat-btn { font-size: 14px; padding: 10px 20px; }
+      .chat-btn.phone-btn { width: 80%; }
+      #chat-toggle { width: 48px; height: 48px; font-size: 20px; }
+      #chat-toggle::after { width: 16px; height: 16px; font-size: 10px; }
+    }
+    @media (max-width: 600px) {
+      #about { padding-left: 1.2rem; padding-right: 1.2rem; }
+      #about p, #about ul { text-align: left; }
+    }
+    .lang-switch { display: flex; gap: 0.5rem; align-items: center; margin-left: 1rem; }
+    .lang-btn { font-weight: 600; padding: 0.25rem 0.6rem; border-radius: 4px; transition: 0.2s; font-size: 0.9rem; }
+    .lang-btn:hover { background: rgba(0, 0, 0, 0.06); }
+    .lang-btn.active { color: #fff; background: var(--primary); }
+  </style>
+</head>
+
+<body>
+  <div id="dienstModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:2000; align-items:center; justify-content:center;">
+    <div style="background:#fff; padding:2rem; border-radius:10px; max-width:600px; width:90%; position:relative; text-align:left;">
+      <button onclick="document.getElementById('dienstModal').style.display='none'" style="position:absolute; top:10px; right:15px; font-size:18px; border:none; background:none; cursor:pointer;">&times;</button>
+      <img id="modalImage" src="" alt="Detail" style="width:100%; border-radius:8px; margin-bottom:1rem;" />
+      <h3 id="modalTitle" style="margin-top:0"></h3>
+      <p id="modalText"></p>
+    </div>
+  </div>
+
+  <script>
+    function openDienstModal(title, text, image) {
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalText').innerText = text;
+      document.getElementById('modalImage').src = image;
+      document.getElementById('dienstModal').style.display = 'flex';
+    }
+     // ↓ Voeg deze code toe om op klikken buiten de witte modal te sluiten:
+    const overlay = document.getElementById('dienstModal');
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) {
+        overlay.style.display = 'none';
+      }
+    });
+  </script>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <a href="#home" class="nav__logo"><img src="img/logo_1.svg" alt="Juko Techniek Logo" height="70" /></a>
+      <nav class="nav__links">
+        <a href="#services">Services</a>
+        <a href="#projects">Projects</a>
+        <a href="#about">About us</a>
+        <a href="#contact">Contact</a>
+        <div class="lang-switch">
+          <a href="index.html" class="lang-btn">NL</a>
+          <a href="index-en.html" class="lang-btn active">EN</a>
+        </div>
+      </nav>
+      <div class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></div>
+    </div>
+    <div class="container mobile-menu" id="mobileMenu">
+      <a href="#services" onclick="toggleMenu()">Services</a>
+      <a href="#projects" onclick="toggleMenu()">Projects</a>
+      <a href="#about" onclick="toggleMenu()">About us</a>
+      <a href="#contact" onclick="toggleMenu()">Contact</a>
+      <div class="lang-switch">
+        <a href="index.html" class="lang-btn">NL</a>
+        <a href="index-en.html" class="lang-btn active">EN</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="hero__content">
+      <h1 class="hero__title">Your partner in <span>industrial</span><br />automation</h1>
+      <p style="max-width:600px;margin:1rem auto 2.5rem; font-size:1.25rem;">We combine craftsmanship with modern technology to prevent failures and improve processes.</p>
+      <a href="#contact" class="btn">Contact us</a>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services">
+    <div class="container">
+      <h2 class="section-title">What We Do</h2>
+      <p class="section-subtitle">Expertise in every phase of industrial automation.</p>
+      <div class="services">
+        <div class="service" onclick="openDienstModal('Compact control panel for product class display on a monitor', 'We design, build, and modernize control cabinets and systems tailored to any industrial application.', 'img/Foto schakelkast boven.jpeg')">
+          <div class="service__icon">⚙️</div>
+          <h3 class="service__title">Control systems</h3>
+          <p>You provide the challenge, we provide the solution.</p>
+          <span class="service__link">Learn more →</span>
+        </div>
+
+        <div class="service" onclick="openDienstModal('Update Danfoss Profinet cards', 'Smart solutions to make your production process more efficient and future-proof.', 'img/Danfoss Regelaars.jpg')">
+          <div class="service__icon">📈</div>
+          <h3 class="service__title">Process optimization</h3>
+          <p>Less downtime, more efficiency.</p>
+          <span class="service__link">Learn more →</span>
+        </div>
+
+        <div class="service" onclick="openDienstModal('Assisted in installing a machine for a machine builder', 'Installation, maintenance, and troubleshooting services for industrial installations. Available 24/7.', 'img/Installatie.jpeg')">
+          <div class="service__icon">🛠️</div>
+          <h3 class="service__title">Industrial services</h3>
+          <p>One point of contact for installation, troubleshooting, and modifications.</p>
+          <span class="service__link">Learn more →</span>
+        </div>
+
+        <div class="service" onclick="openDienstModal('Chatbot with its own AI-driven database', 'Smart software solutions focusing on integrations and AI-driven automation.', 'img/Jukobot.png')">
+          <div class="service__icon">💻</div>
+          <h3 class="service__title">Software automation</h3>
+          <p>Boost your productivity with AI-driven automation and seamless software integrations.</p>
+          <span class="service__link">Learn more →</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Us -->
+  <section id="about" style="text-align: center;">
+    <section id="about" style="text-align: center;">
+  <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">
+    About us
+    </h2>
+    <p>Juko Techniek B.V. is a young and ambitious company specializing in:</p>
+    <ul style="display: inline-block; text-align: left;">
+      <li>Industrial services</li>
+      <li>Project management</li>
+      <li>Custom automation</li>
+      <li>Software automation</li>
+      <li>Production optimization</li>
+      <li>Resolving recurring failures</li>
+    </ul>
+
+    <p style="margin-top: 2rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+      With a future-oriented vision, we build smart solutions for industry.<br>
+      Through tailored control technology, process optimization, and technical service, we ensure installations run reliably.<br><br>
+      In addition, we create AI-driven automations and intelligent system integrations.<br>
+      This way, we continuously innovate to prepare our clients for the future of production and industrial digitalization.
+    </p>
+  </section>
+
+  <!-- USP Counter Section -->
+  <section style="padding: 4rem 0;">
+    <div class="container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 3rem; text-align: center;">
+      <div style="flex: 1 1 200px;">
+        <div style="font-size: 3rem; color: #e20815;">✅</div>
+        <h3 style="font-size: 2rem; margin: .5rem 0;"><span class="counter" data-target="30">0</span>+</h3>
+        <p style="color: #555;">Projects successfully delivered</p>
+      </div>
+
+      <div style="flex: 1 1 200px;">
+        <div style="font-size: 3rem; color: #e20815;">📞</div>
+        <h3 style="font-size: 2rem; margin: .5rem 0;">24/7</h3>
+        <p style="color: #555;">Available 24/7 for troubleshooting</p>
+      </div>
+
+      <div style="flex: 1 1 200px;">
+        <div style="font-size: 3rem; color: #e20815;">🛠️</div>
+        <h3 style="font-size: 2rem; margin: .5rem 0;"><span class="counter" data-target="100">0</span>%</h3>
+        <p style="color: #555;">Customized for every situation</p>
+      </div>
+    </div>
+   </section>
+
+  <!-- Projects -->
+  <section id="projects" class="projecten">
+    <h2 class="projecten__titel">Recent projects</h2>
+    <p class="projecten__sub">A selection of our successful automation solutions.</p>
+
+    <div class="projecten__grid">
+      <!-- Project Card 1 -->
+      <div class="project__card">
+        <div class="swiper projectSwiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <a href="img/Baconsorteerder programeren_v1.jpg" class="glightbox" data-gallery="p1">
+                <img src="img/Baconsorteerder programeren_v1.jpg" alt="Automation of bacon sorter – image 1">
+              </a>
+            </div>
+            <div class="swiper-slide">
+              <a href="img/Bekabelen.jpg" class="glightbox" data-gallery="p1">
+                <img src="img/Bekabelen.jpg" alt="Automation bacon sorter – image 2">
+              </a>
+            </div>
+          </div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+        </div>
+        <div class="project__content">
+          <h3>Automation of bacon sorter</h3>
+          <p>Custom control made for a bacon sorter. With an adjustable timer so that timing can be set when the sorter needs to switch sides.</p>
+        </div>
+      </div>
+
+      <!-- Project Card 2 -->
+      <div class="project__card">
+        <div class="swiper projectSwiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <a href="img/Foto A Boven.jpeg" class="glightbox" data-gallery="p2">
+                <img src="img/Foto A Boven.jpeg" alt="Visual product class display – image 1">
+              </a>
+            </div>
+            <div class="swiper-slide">
+              <a href="img/Foto A Beneden.jpg" class="glightbox" data-gallery="p2">
+                <img src="img/Foto A Beneden.jpg" alt="Visual product class display – image 2">
+              </a>
+            </div>
+          </div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+        </div>
+        <div class="project__content">
+          <h3>Visual product class display</h3>
+          <p>An efficient system where the current product class is clearly displayed on screens on two floors. This promotes communication between both levels.</p>
+        </div>
+      </div>
+
+      <!-- Project Card 3 -->
+      <div class="project__card">
+        <div class="swiper projectSwiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <a href="img/Danfoss_Update.jpeg" class="glightbox" data-gallery="p3">
+                <img src="img/Danfoss_Update.jpeg" alt="Danfoss firmware update – image 1">
+              </a>
+            </div>
+            <div class="swiper-slide">
+              <a href="img/Danfoss Kaarten.jpeg" class="glightbox" data-gallery="p3">
+                <img src="img/Danfoss Kaarten.jpeg" alt="Danfoss firmware update – image 2">
+              </a>
+            </div>
+          </div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+        </div>
+        <div class="project__content">
+          <h3>Danfoss firmware update</h3>
+          <p>Updating the firmware of Danfoss Profinet cards to the latest version.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <h2 class="section-title" style="color:#fff;">Contact us</h2>
+      <p class="section-subtitle" style="color:#d1d1d1;">Ready to optimize your production? We are here for you.</p>
+      <div class="contact-grid">
+        <div class="contact-item">
+          <span class="contact-icon">📞</span>
+          <div>
+            <p style="font-weight:600;">Phone</p>
+            <a href="tel:+31622035459">+31 (0)6 22 035 459</a>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <span class="contact-icon">✉️</span>
+          <div>
+            <p style="font-weight:600;">Email</p>
+            <a href="mailto:info@jukotechniek.nl">info@jukotechniek.nl</a>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <a href="https://www.linkedin.com/in/justin-jansen-43a68325a/" target="_blank" aria-label="LinkedIn" style="display:flex; align-items:center; gap:0.75rem; text-decoration:none;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#0077b5" viewBox="0 0 24 24">
+              <path d="M20.45 20.45h-3.55v-5.47c0-1.3-.02-2.97-1.81-2.97-1.81 0-2.09 1.41-2.09 2.87v5.57H9.45V9h3.41v1.56h.05c.48-.9 1.64-1.84 3.38-1.84 3.61 0 4.28 2.37 4.28 5.45v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zm1.77 13.02H3.57V9h3.54v11.45zM22.23 0H1.77C.8 0 0 .77 0 1.72v20.55C0 23.23.8 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.23 0z"/>
+            </svg>
+            <span style="font-weight:600; color:#fff;">LinkedIn</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    © <span id="year"></span> Juko Techniek B.V. – All rights reserved •
+    <a href="algemenevoorwaarden.html" target="_blank">Terms and Conditions</a> •
+    <a href="privacy.html" target="_blank">Privacy&nbsp;&amp;&nbsp;Cookies</a>
+  </footer>
+
+  <!-- Chat-widget (unchanged) -->
+  <div class="chatbot" id="chatbox">
+    <div class="chatbot-inner">
+      <button class="chat-close" id="chat-close" aria-label="Close">&times;</button>
+      <div class="chat-ballon">
+        <img src="img/foto Justin_v1.jpg" alt="Justin" />
+        <div class="chat-info">
+          <strong>Justin</strong> from Juko Techniek
+          <small>Good morning 👋<br/>Have a question? I’m happy to help you via:</small>
+        </div>
+      </div>
+      <div class="chat-buttons">
+        <button class="chat-btn email-btn" onclick="location='mailto:info@jukotechniek.nl'">Email</button>
+        <button class="chat-btn whatsapp-btn green" onclick="window.open('https://wa.me/31622035459','_blank')">WhatsApp</button>
+        <button class="chat-btn phone-btn" onclick="location='tel:+31622035459'">Call</button>
+      </div>
+    </div>
+  </div>
+  <button id="chat-toggle" aria-label="Open chat">💬</button>
+
+  <!-- Cookie-banner -->
+  <div id="cookie-banner" style="
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    color: #1d1d1b;
+    box-shadow: 0 8px 12px rgba(0,0,0,.12);
+    padding: 1.2rem 1.5rem;
+    display: none;
+    flex-wrap: wrap;
+    z-index: 1200;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #000;
+    max-width: 420px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+  ">
+    <p style="margin: 0; flex: 1 1 100%; font-size: .95rem;">
+      We use analytics cookies to improve our website. This data is anonymous and not traceable.
+    </p>
+
+    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+      <button id="cookie-accept" style="
+        background: #20c997;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 10px 24px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+      ">Accept</button>
+
+      <button id="cookie-decline" style="
+        background: none;
+        border: none;
+        padding: 10px 10px;
+        color: #666;
+        font-size: 1rem;
+        cursor: pointer;
+      ">No thanks</button>
+    </div>
+  </div>
+
+  <!-- JS Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+
+  <!-- Custom scripts -->
+  <script>
+    // Mobile menu
+    const hamburger = document.getElementById('hamburger'),
+          mobileMenu = document.getElementById('mobileMenu');
+    function toggleMenu() {
+      mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open');
+    }
+    hamburger.addEventListener('click', toggleMenu);
+
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Chat
+    const chatToggle = document.getElementById('chat-toggle'),
+          chatbox = document.getElementById('chatbox'),
+          chatClose = document.getElementById('chat-close');
+
+    function openChat() {
+      chatbox.classList.add('open');
+      chatToggle.classList.add('seen');
+      chatToggle.style.display = 'none';
+    }
+
+    function closeChat() {
+      chatbox.classList.remove('open');
+      chatToggle.classList.remove('seen');
+      chatToggle.style.display = 'block';
+    }
+
+    chatToggle.addEventListener('click', openChat);
+    chatClose.addEventListener('click', closeChat);
+
+    // Cookie consent + Google Analytics
+    const banner = document.getElementById('cookie-banner'),
+          accept = document.getElementById('cookie-accept'),
+          decline = document.getElementById('cookie-decline');
+
+    // Greeting
+    const chatInfo = document.querySelector('.chat-info small');
+    const hours = new Date().getHours();
+    let greeting = 'Hello';
+    if (hours >= 5 && hours < 12) greeting = 'Good morning 👋';
+    else if (hours >= 12 && hours < 18) greeting = 'Good afternoon 👋';
+    else greeting = 'Good evening 👋';
+    chatInfo.innerHTML = `${greeting}<br/>Have a question? I’m happy to help you via:`;
+
+    function setCookie(name, value, days) {
+      const expires = new Date(Date.now() + days * 864e5).toUTCString();
+      document.cookie = `${name}=${value}; expires=${expires}; path=/`;
+    }
+
+    function hasCookie(name) {
+      return document.cookie.split(';').some(c => c.trim().startsWith(name + '='));
+    }
+
+    function loadGA() {
+      const GA_ID = 'G-ZGX0JKMFP7';
+      const s = document.createElement('script');
+      s.async = true;
+      s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+      document.head.appendChild(s);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+
+      gtag('js', new Date());
+      gtag('config', GA_ID, { anonymize_ip: true });
+    }
+
+    function handleConsent(consent) {
+      setCookie('jukoConsent', consent, 365);
+      banner.style.display = 'none';
+      if (consent === 'true') loadGA();
+      setTimeout(openChat, 5000);
+    }
+
+    // Init behavior
+    if (!hasCookie('jukoConsent')) {
+      banner.style.display = 'flex';
+    } else {
+      if (document.cookie.includes('jukoConsent=true')) loadGA();
+      setTimeout(openChat, 5000);
+    }
+
+    // Buttons
+    accept.addEventListener('click', () => handleConsent('true'));
+    decline.addEventListener('click', () => handleConsent('false'));
+
+    // Click outside banner
+    window.addEventListener('click', (e) => {
+      if (!banner.contains(e.target) && banner.style.display === 'flex') {
+        banner.style.display = 'none';
+      }
+    });
+
+   // Swiper
+document.querySelectorAll('.projectSwiper').forEach(slider => {
+  new Swiper(slider, {
+    navigation: {
+      nextEl: slider.querySelector('.swiper-button-next'),
+      prevEl: slider.querySelector('.swiper-button-prev')
+    },
+    loop: true
+  });
+});
+
+// Zorg dat klikken op de navigatiepijltjes niet doorklikt naar de .project__card
+document.querySelectorAll('.swiper-button-next, .swiper-button-prev').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+  });
+});
+
+// 1) Maak één GLightbox-instantie voor alle .glightbox-links
+const gallery = GLightbox({
+  selector: '.glightbox',
+  loop: true,
+  zoomable: true
+});
+
+// 2) Vervang de oude “link.click()”-logica door deze:
+document.querySelectorAll('.project__card').forEach(card => {
+  card.addEventListener('click', () => {
+    // Vind de eerste <a class="glightbox"> binnen deze kaart
+    const firstLink = card.querySelector('a.glightbox');
+    if (!firstLink) return;
+
+    // Lees het data-gallery attribuut (bijv. "p1", "p2", "p3")
+    const galleryId = firstLink.getAttribute('data-gallery');
+
+    // Open de Lightbox-galerij voor deze kaart, start op slide-index 0
+    gallery.open({ gallery: galleryId, startAt: 0 });
+  });
+});
+
+
+    // Counter animation
+    const counters = document.querySelectorAll('.counter');
+    let counterStarted = false;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !counterStarted) {
+          counters.forEach(counter => {
+            const updateCount = () => {
+              const target = +counter.getAttribute('data-target');
+              const count = +counter.innerText.replace(/[^\d]/g, '');
+              const increment = Math.ceil(target / 50);
+
+              if (count < target) {
+                counter.innerText = count + increment;
+                setTimeout(updateCount, 30);
+              } else {
+                counter.innerText = target;
+              }
+            };
+            updateCount();
+          });
+          counterStarted = true;
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.5 });
+
+    if (counters.length > 0) {
+      observer.observe(counters[0].parentElement.parentElement);
+    }
+  </script>
+</body>
+</html>
